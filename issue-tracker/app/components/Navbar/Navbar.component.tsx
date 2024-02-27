@@ -10,7 +10,6 @@ import classNames from "classnames";
 const Navbar = () => {
   // to get the active navbar item
   const currentPath = usePathname();
-  console.log("first", currentPath);
 
   const links: NavItem[] = [
     {
@@ -23,7 +22,7 @@ const Navbar = () => {
     },
   ];
   return (
-    <nav className="flex space-x-6 border-b mb-5 h-14 items-center">
+    <nav className="flex space-x-6 border-b mb-5 h-14 items-center px-3">
       <Link href="/">
         <AiFillBug />
       </Link>

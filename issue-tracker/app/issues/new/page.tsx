@@ -2,7 +2,7 @@
 import { Button, Heading, TextArea, TextField } from "@radix-ui/themes";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
-
+import axios, { AxiosError } from "axios";
 // form shape
 interface IssueForm {
   title: string;
@@ -15,16 +15,10 @@ const NewIssue = () => {
 
   async function createNewIssue(data: IssueForm) {
     try {
-      const response = await fetch("/api/issues", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        const dataFromResponse = await response.json();
-        router.push("/issues");
-      }
+      const response = await axios.post("/api/issues", data);
+      router.push("/issues");
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }
 

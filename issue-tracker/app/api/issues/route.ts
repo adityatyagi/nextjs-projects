@@ -16,7 +16,7 @@ export async function POST(request: NextRequest){
 
     // if the request body is not valid
     if(!validation.success){
-        return NextResponse.json(validation.error.errors, {
+        return NextResponse.json(validation.error.format(), {
             status: 400 // 400 = bad request i.e. the client sent invalid data
         })
     }

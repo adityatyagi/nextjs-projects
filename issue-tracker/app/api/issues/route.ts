@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import {z} from 'zod';
 import Prisma from "@/prisma/client";
-
-// schema for the request. validate the incoming request against this schema before hitting the API
-const createIssueSchema = z.object({
-    title: z.string().min(1, "Title is required").max(255),
-    description: z.string().min(1, "Description is required")
-})
+import { createIssueSchema } from "@/app/schemas";
 
 export async function POST(request: NextRequest){
     const body = await request.json();
@@ -32,8 +26,4 @@ export async function POST(request: NextRequest){
     return NextResponse.json(newIssue, {
         status: 201
     });
-
-
-
-
 }

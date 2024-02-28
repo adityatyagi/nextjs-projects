@@ -1,46 +1,100 @@
 "use client";
-import { Button, Heading, TextArea, TextField } from "@radix-ui/themes";
+import {
+  Button,
+  Callout,
+  Heading,
+  Text,
+  TextArea,
+  TextField,
+} from "@radix-ui/themes";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { IoMdAlert } from "react-icons/io";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createIssueSchema } from "@/app/schemas";
+
+// generating interface from a schema
+import { z } from "zod";
+type IssueForm = z.infer<typeof createIssueSchema>;
+
 // form shape
-interface IssueForm {
-  title: string;
-  description: string;
-}
+// interface IssueForm {
+//   title: string;
+//   description: string;
+// }
 
 const NewIssue = () => {
-  const { register, control, handleSubmit } = useForm<IssueForm>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+  });
   const router = useRouter();
 
+  const [error, setError] = useState<string>();
+
+  // create new issue
   async function createNewIssue(data: IssueForm) {
     try {
-      const response = await axios.post("/api/issues", data);
+      await axios.post("/api/issues", data);
       router.push("/issues");
     } catch (error) {
       console.log(error);
+      setError("An unexpected error occured");
     }
   }
 
   return (
-    <form
-      className="max-w-xl space-y-3"
-      onSubmit={handleSubmit((data) => createNewIssue(data))}
-    >
-      <Heading>Add New Issue</Heading>
-      <TextField.Root>
-        <TextField.Input placeholder="Title" {...register("title")} />
-      </TextField.Root>
-      <Controller
-        name="description"
-        control={control}
-        render={({ field }) => (
-          <TextArea placeholder="Description" {...field} />
-        )}
-      />
+    <div className="max-w-xl ">
+      {/* If we have an error, show the callout */}
+      {error && (
+        <Callout.Root variant="soft" className="mb-5">
+          <Callout.Icon>
+            <IoMdAlert />
+          </Callout.Icon>
+          <Callout.Text>The error</Callout.Text>
+        </Callout.Root>
+      )}
 
-      <Button>Submit New Issue</Button>
-    </form>
+      {/* New issue form */}
+      <form
+        className="space-y-3"
+        onSubmit={handleSubmit((data) => createNewIssue(data))}
+      >
+        <Heading>Add New Issue</Heading>
+
+        {/* Title */}
+        <TextField.Root>
+          <TextField.Input placeholder="Title" {...register("title")} />
+        </TextField.Root>
+        {errors.title && (
+          <Text color="red" as="p">
+            {errors.title.message}
+          </Text>
+        )}
+
+        {/* Description */}
+        <Controller
+          name="description"
+          control={control}
+          render={({ field }) => (
+            <TextArea placeholder="Description" {...field} />
+          )}
+        />
+        {errors.description && (
+          <Text color="red" as="p">
+            {errors.description.message}
+          </Text>
+        )}
+
+        <Button>Submit New Issue</Button>
+      </form>
+    </div>
   );
 };
 

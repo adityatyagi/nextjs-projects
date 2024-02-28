@@ -24,10 +24,21 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Screenshots
 
-![Dashboard](image.png)
-![Add New Issue](image-1.png)
-![Client Side Validations](image-6.png)
-![DB entries](image-3.png)
+### Dashboard
+
+![Dashboard](/readme-assets/image.png)
+
+### Add New Issue
+
+![Add New Issue](/readme-assets/image-1.png)
+
+### Client Side Validations
+
+![Client Side Validations](/readme-assets/image-6.png)
+
+### DB Entries
+
+![DB entries](/readme-assets/image-3.png)
 
 ## Learn More
 

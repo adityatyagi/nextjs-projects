@@ -26,19 +26,19 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ### Dashboard
 
-![Dashboard](/readme-assets/image.png)
+![Dashboard](./readme-assets/image.png)
 
 ### Add New Issue
 
-![Add New Issue](/readme-assets/image-1.png)
+![Add New Issue](./readme-assets/image-1.png)
 
 ### Client Side Validations
 
-![Client Side Validations](/readme-assets/image-6.png)
+![Client Side Validations](./readme-assets/image-6.png)
 
 ### DB Entries
 
-![DB entries](/readme-assets/image-3.png)
+![DB entries](./readme-assets/image-3.png)
 
 ## Learn More
 

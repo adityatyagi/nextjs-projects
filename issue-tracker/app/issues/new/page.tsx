@@ -17,6 +17,7 @@ import { createIssueSchema } from "@/app/schemas";
 
 // generating interface from a schema
 import { z } from "zod";
+import ErrorMessage from "@/app/components/ErrorMessage/ErrorMessage.component";
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 // form shape
@@ -67,17 +68,11 @@ const NewIssue = () => {
         onSubmit={handleSubmit((data) => createNewIssue(data))}
       >
         <Heading>Add New Issue</Heading>
-
         {/* Title */}
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register("title")} />
         </TextField.Root>
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
-
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         {/* Description */}
         <Controller
           name="description"
@@ -86,12 +81,7 @@ const NewIssue = () => {
             <TextArea placeholder="Description" {...field} />
           )}
         />
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message}
-          </Text>
-        )}
-
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button>Submit New Issue</Button>
       </form>
     </div>

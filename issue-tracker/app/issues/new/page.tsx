@@ -1,21 +1,37 @@
 "use client";
 import { Button, Heading, TextArea, TextField } from "@radix-ui/themes";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 // form shape
 interface IssueForm {
   title: string;
   description: string;
 }
+
 const NewIssue = () => {
   const { register, control, handleSubmit } = useForm<IssueForm>();
+  const router = useRouter();
+
+  async function createNewIssue(data: IssueForm) {
+    try {
+      const response = await fetch("/api/issues", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        const dataFromResponse = await response.json();
+        router.push("/issues");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <form
       className="max-w-xl space-y-3"
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={handleSubmit((data) => createNewIssue(data))}
     >
       <Heading>Add New Issue</Heading>
       <TextField.Root>
@@ -25,7 +41,7 @@ const NewIssue = () => {
         name="description"
         control={control}
         render={({ field }) => (
-          <SimpleMDE placeholder="Description" {...field} />
+          <TextArea placeholder="Description" {...field} />
         )}
       />
 

@@ -18,6 +18,7 @@ import { createIssueSchema } from "@/app/schemas";
 // generating interface from a schema
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage/ErrorMessage.component";
+import Spinner from "@/app/components/Spinner/Spinner.component";
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 // form shape
@@ -38,15 +39,19 @@ const NewIssue = () => {
   const router = useRouter();
 
   const [error, setError] = useState<string>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // create new issue
   async function createNewIssue(data: IssueForm) {
     try {
+      setIsSubmitting(true);
       await axios.post("/api/issues", data);
       router.push("/issues");
+      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
       setError("An unexpected error occured");
+      setIsSubmitting(false);
     }
   }
 
@@ -82,7 +87,9 @@ const NewIssue = () => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button>Submit New Issue</Button>
+        <Button disabled={isSubmitting} className="p-5">
+          Submit New Issue {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );

@@ -40,7 +40,6 @@ const FormGenerator = (props: Props) => {
       // if the form is successfully generated, close the modal
       setOpen(false);
     }
-    console.log(state);
   }, [state.message]);
 
   // opens the dialog

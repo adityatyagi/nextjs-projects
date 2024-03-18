@@ -36,7 +36,6 @@ const FormGenerator = (props: Props) => {
   const [state, formAction] = useFormState(generateForm, initialState);
   const [open, setOpen] = useState(false);
   const session = useSession();
-  console.log("🚀 ~ FormGenerator ~ session:", session);
 
   useEffect(() => {
     if (state.message === "success") {
@@ -47,7 +46,11 @@ const FormGenerator = (props: Props) => {
 
   // opens the dialog
   function onFormCreate() {
-    setOpen(true);
+    if (session.status === "authenticated") {
+      setOpen(true);
+    } else {
+      signIn();
+    }
   }
 
   return (

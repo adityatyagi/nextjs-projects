@@ -6,17 +6,20 @@ import type {
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@/db/index";
 
 // You'll need to import and pass this
 // to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`
-export const authConfigNextAuth = {
+export const authConfigNextAuth: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
   ],
-} satisfies NextAuthOptions;
+  adapter: DrizzleAdapter(db) as NextAuthOptions["adapter"],
+};
 
 // Use it in server contexts
 export function auth(

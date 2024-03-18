@@ -11,6 +11,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { generateForm } from "@/actions/generateForm";
 import { useFormState, useFormStatus } from "react-dom";
+import { useSession, signIn, signOut, SessionProvider } from "next-auth/react";
 
 type Props = {};
 
@@ -34,6 +35,8 @@ const initialState: {
 const FormGenerator = (props: Props) => {
   const [state, formAction] = useFormState(generateForm, initialState);
   const [open, setOpen] = useState(false);
+  const session = useSession();
+  console.log("🚀 ~ FormGenerator ~ session:", session);
 
   useEffect(() => {
     if (state.message === "success") {

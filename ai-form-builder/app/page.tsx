@@ -1,5 +1,5 @@
 import Header from "@/components/ui/header";
-import FormGenerator from "./form-generator";
+import FormGenerator from "./containers/form-generator";
 
 export default function Home() {
   return (

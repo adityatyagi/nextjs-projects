@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useFormState, useFormStatus } from "react-dom";
-import { useSession, signIn, signOut, SessionProvider } from "next-auth/react";
-import { generateForm } from "../actions/generateForm";
+import { useSession, signIn } from "next-auth/react";
+import { generateForm } from "@/app/actions/generateForm";
+import { navigate } from "@/app/actions/navigateToForm";
 
 type Props = {};
 
@@ -41,8 +42,9 @@ const FormGenerator = (props: Props) => {
     if (state.message === "success") {
       // if the form is successfully generated, close the modal
       setOpen(false);
+      navigate(state.data.formId);
     }
-  }, [state.message]);
+  }, [state.message, state.data]);
 
   // opens the dialog
   function onFormCreate() {

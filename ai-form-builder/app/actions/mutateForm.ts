@@ -15,7 +15,6 @@ export async function saveForm(data: {
   description: string;
   questions: Question[];
 }) {
-  console.log("data to be saved in db", data);
   const { name, description, questions } = data;
 
   // get userId
@@ -33,7 +32,7 @@ export async function saveForm(data: {
     .returning({
       insertedId: forms.id,
     });
-  console.log("🚀 ~ newForm ~ newForm:", newForm);
+
   const responseFormId = newForm[0].insertedId;
 
   // adding new questions
@@ -45,13 +44,10 @@ export async function saveForm(data: {
       formId: responseFormId,
     };
   });
-  console.log("🚀 ~ newQuestions ~ newQuestions:", newQuestions);
 
   //   // bulk update
   await db.transaction(async (tx) => {
     for (let questionItem of newQuestions) {
-      console.log(questionItem);
-
       const [{ questionId }] = await tx
         .insert(dbQuestions)
         .values({

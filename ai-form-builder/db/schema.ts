@@ -81,7 +81,7 @@ export const forms = pgTable("forms", {
   published: boolean("published"),
 });
 
-const formRelations = relations(forms, ({ many, one }) => ({
+export const formRelations = relations(forms, ({ many, one }) => ({
   questions: many(questions),
   user: one(users, {
     fields: [forms.userId],
@@ -96,7 +96,7 @@ export const questions = pgTable("questions", {
   formId: integer("form_id"),
 });
 
-const questionsRelations = relations(questions, ({ many, one }) => ({
+export const questionsRelations = relations(questions, ({ many, one }) => ({
   form: one(forms, {
     fields: [questions.formId],
     references: [forms.id],
@@ -111,8 +111,8 @@ export const fieldOptions = pgTable("fieldOptions", {
   questionId: integer("question_id"),
 });
 
-const fieldOptionsRelations = relations(fieldOptions, ({ one }) => ({
-  questions: one(questions, {
+export const fieldOptionsRelations = relations(fieldOptions, ({ one }) => ({
+  question: one(questions, {
     fields: [fieldOptions.questionId],
     references: [questions.id],
   }),

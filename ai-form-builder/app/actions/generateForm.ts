@@ -66,16 +66,15 @@ export async function generateForm(
       description: "Testing save form description",
       questions: JSON.parse(json.choices[0].message.content).questions,
     });
-    console.log("dbFormId", dbFormId);
 
     // revalidating the path on success to purge the server-side cache
     revalidatePath("/");
     return {
       message: "success",
-      data: json,
+      data: { formId: dbFormId },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       message: "Failed to send request and create form",
     };

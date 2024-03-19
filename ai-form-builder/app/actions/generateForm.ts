@@ -1,6 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { saveForm } from "./mutateForm";
 
 export async function generateForm(
   prevState: {
@@ -39,8 +40,6 @@ export async function generateForm(
   // if the parsing of the data is succesfull
   const data = parse.data;
 
-  console.log(`${data.description}. ${promptExplanation}`);
-
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       headers: {
@@ -60,7 +59,14 @@ export async function generateForm(
     });
 
     const json = await response.json();
-    console.log("🚀 ~ json:", json);
+
+    // save the response from OPENAI to DB
+    const dbFormId = await saveForm({
+      name: "Testing Save Form",
+      description: "Testing save form description",
+      questions: JSON.parse(json.choices[0].message.content).questions,
+    });
+    console.log("dbFormId", dbFormId);
 
     // revalidating the path on success to purge the server-side cache
     revalidatePath("/");

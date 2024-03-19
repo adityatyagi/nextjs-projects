@@ -16,7 +16,7 @@ export const formElements = pgEnum("field_type", [
   "RadioGroup",
   "Select",
   "Input",
-  "TextArea",
+  "Textarea",
   "Switch",
 ]);
 

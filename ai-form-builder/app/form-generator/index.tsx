@@ -9,9 +9,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { generateForm } from "@/actions/generateForm";
 import { useFormState, useFormStatus } from "react-dom";
 import { useSession, signIn, signOut, SessionProvider } from "next-auth/react";
+import { generateForm } from "../actions/generateForm";
 
 type Props = {};
 

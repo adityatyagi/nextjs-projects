@@ -1,5 +1,5 @@
 import Header from "@/components/ui/header";
-import FormGenerator from "./containers/form-generator";
+import FormGenerator from "./form-generator";
 import { db } from "@/db";
 import { forms } from "@/db/schema";
 import FormsList from "./forms/FormsList";

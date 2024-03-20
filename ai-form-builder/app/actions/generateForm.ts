@@ -62,8 +62,8 @@ export async function generateForm(
 
     // save the response from OPENAI to DB
     const dbFormId = await saveForm({
-      name: "Testing Save Form",
-      description: "Testing save form description",
+      name: "Test Form",
+      description: data.description,
       questions: JSON.parse(json.choices[0].message.content).questions,
     });
 

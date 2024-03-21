@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { forms } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@/auth";
+import Form from "../../Form";
 type Props = {
   params: {
     id: string;
@@ -37,7 +38,14 @@ const EditForm = async ({ params }: Props) => {
     return <div>You are not authorized to edit this form.</div>;
   }
 
-  return <div>{id}</div>;
+  if (!formDetailsFromDB) {
+    return <h1>Form Not Found</h1>;
+  }
+  return (
+    <div>
+      <Form form={formDetailsFromDB} />
+    </div>
+  );
 };
 
 export default EditForm;

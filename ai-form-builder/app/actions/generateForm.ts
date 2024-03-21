@@ -59,12 +59,13 @@ export async function generateForm(
     });
 
     const json = await response.json();
+    const responseObj = JSON.parse(json.choices[0].message.content);
 
     // save the response from OPENAI to DB
     const dbFormId = await saveForm({
-      name: "Test Form",
-      description: data.description,
-      questions: JSON.parse(json.choices[0].message.content).questions,
+      name: responseObj.name,
+      description: responseObj.description,
+      questions: responseObj.questions,
     });
 
     // revalidating the path on success to purge the server-side cache

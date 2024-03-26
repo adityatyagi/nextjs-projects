@@ -10,9 +10,11 @@ import {
   FormField as ShadCDNFormField,
   FormItem,
   FormLabel,
+  FormControl,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import FormField from "./FormField";
 
 interface IForm extends FormSelectModel {
   questions: Array<
@@ -52,10 +54,16 @@ const Form = (props: Props) => {
                   key={`${questionItem.text}_${index}`}
                   render={({ field }) => {
                     return (
-                      <FormItem>
+                      <FormItem className="mb-6">
                         <FormLabel className="mb-3 text-base">
                           {index + 1}. {questionItem.text}
                         </FormLabel>
+                        <FormControl>
+                          <FormField
+                            element={questionItem}
+                            key={index}
+                          ></FormField>
+                        </FormControl>
                       </FormItem>
                     );
                   }}
